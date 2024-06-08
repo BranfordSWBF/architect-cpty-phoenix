@@ -242,7 +242,7 @@ async fn run(
             }
         });
     }
-    let bind_addr: SocketAddr = "127.0.0.1:8000".parse()?;
+    let bind_addr: SocketAddr = "127.0.0.1:5800".parse()?;
     let listener = TcpListener::bind(&bind_addr).await?;
     info!("listening on {bind_addr}...");
     while let Ok((stream, _)) = listener.accept().await {
