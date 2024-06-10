@@ -8,6 +8,7 @@ use api::{
 use architect_cpty_phoenix::*;
 use bytes::{BufMut, BytesMut};
 use chrono::{TimeZone, Utc};
+use solana_sdk::compute_budget::ComputeBudgetInstruction;
 use clap::Parser;
 use ellipsis_client::EllipsisClient;
 use futures_util::{select_biased, FutureExt, SinkExt, StreamExt};
@@ -422,6 +423,8 @@ async fn handle_message(
                 _ => reject!("unsupported time in force"),
             };
             let mut ixs = vec![];
+            ixs.push(ComputeBudgetInstruction::set_compute_unit_limit(500_000));
+            ixs.push(ComputeBudgetInstruction::set_compute_unit_price(20_000));
             // create market seat if we aren't already seated
             if !market_info.seated.load(Ordering::Relaxed) {
                 let ix = sdk_client
