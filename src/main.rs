@@ -423,8 +423,7 @@ async fn handle_message(
                 _ => reject!("unsupported time in force"),
             };
             let mut ixs = vec![];
-            ixs.push(ComputeBudgetInstruction::set_compute_unit_limit(200_000));
-            ixs.push(ComputeBudgetInstruction::set_compute_unit_price(100_000));
+
             // create market seat if we aren't already seated
             if !market_info.seated.load(Ordering::Relaxed) {
                 let ix = sdk_client
